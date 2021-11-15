@@ -1,0 +1,32 @@
+apiVersion: apps/v1 # Usa apps/v1beta2 para versiones anteriores a 1.9.0
+kind: Deployment
+metadata:
+  name: dogapi-deployment
+spec:
+  selector:
+    matchLabels:
+      app: dogapi
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: dogapi
+    spec:
+      containers:
+      - name: dogapi
+        image: aztoatl/dogapi
+        ports:
+        - containerPort: 80
+kind: Service
+apiVersion: v1
+metadata:
+  name: dogapi-service
+spec:
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: dogapi
+  type: LoadBalancer

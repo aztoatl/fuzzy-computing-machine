@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                echo 'Installing dependiencies..'
+                sh '''python -m pip inttall ./app/requeriments.txt '''
+                echo 'running app'
+                sh '''uvicorn main:app --reload'''
+
+
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                sh '''python -m pytest '''
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Building image....'
+                sh '''docker  image build  -t aztoatl/dogapi:latest'''
+                sh '''docker  image push  aztoatl/dogapi:latest'''
+            }
+        }
+    }
+}

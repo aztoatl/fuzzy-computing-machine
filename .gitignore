@@ -1,3 +1,4 @@
 # Created by pytest automatically.
+*.pyc
 .DS_Store
 .pytest_cache

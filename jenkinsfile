@@ -1,3 +1,5 @@
+//READ THIS BEFORE TRY THIS CODE: This jenkinsfile is just for learning propurses, it was never tested until now, so can be ignored.
+
 pipeline {
     agent any
 
@@ -6,7 +8,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 echo 'Installing dependiencies..'
-                sh '''python -m pip inttall ./app/requeriments.txt '''
+                sh '''python -m pip install ./app/requeriments.txt '''
                 echo 'running app'
                 sh '''uvicorn main:app --reload'''
 
@@ -23,7 +25,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Building image....'
-                sh '''docker  image build  -t aztoatl/dogapi:latest'''
+                sh '''docker  image build  -t aztoatl/dogapi:latest .'''
                 sh '''docker  image push  aztoatl/dogapi:latest'''
             }
         }
